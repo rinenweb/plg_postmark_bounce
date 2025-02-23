@@ -8,6 +8,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
 
 class PlgSystemPostmarkBounce extends CMSPlugin
@@ -24,7 +25,7 @@ class PlgSystemPostmarkBounce extends CMSPlugin
         // Ensure it's a valid bounce or spam complaint event
         if (!isset($data['RecordType']) || !in_array($data['RecordType'], ['Bounce', 'SpamComplaint'])) {
             header('HTTP/1.1 400 Bad Request');
-            exit('Invalid webhook event');
+            exit(Text::_('PLG_SYSTEM_POSTMARKBOUNCE_INVALID_EVENT'));
         }
 
         // Get administrator email or custom email from plugin parameters
@@ -34,17 +35,17 @@ class PlgSystemPostmarkBounce extends CMSPlugin
         $recipientEmail = !empty($customEmail) ? $customEmail : $adminEmail;
 
         // Determine event type
-        $eventType = ($data['RecordType'] === 'Bounce') ? 'Email Bounce' : 'Spam Complaint';
+        $eventType = ($data['RecordType'] === 'Bounce') ? Text::_('PLG_SYSTEM_POSTMARKBOUNCE_BOUNCE') : Text::_('PLG_SYSTEM_POSTMARKBOUNCE_SPAM_COMPLAINT');
 
         // Prepare email details
-        $subject = "[Postmark] {$eventType} Notification";
-        $body = "An event has been received:\n\n" .
-                "Recipient: " . htmlspecialchars($data['Email']) . "\n" .
-                "Event Type: " . htmlspecialchars($eventType) . "\n" .
-                "Description: " . htmlspecialchars($data['Description'] ?? 'No description provided') . "\n" .
-                "Bounced At: " . htmlspecialchars($data['BouncedAt'] ?? 'N/A') . "\n" .
-                "Server ID: " . htmlspecialchars($data['ServerID'] ?? 'N/A') . "\n" .
-                "Message Stream: " . htmlspecialchars($data['MessageStream'] ?? 'N/A') . "\n\n";
+        $subject = sprintf(Text::_('PLG_SYSTEM_POSTMARKBOUNCE_EMAIL_SUBJECT'), $eventType);
+        $body = Text::_('PLG_SYSTEM_POSTMARKBOUNCE_EVENT_RECEIVED') . "\n\n" .
+                Text::_('PLG_SYSTEM_POSTMARKBOUNCE_RECIPIENT') . ' ' . htmlspecialchars($data['Email']) . "\n" .
+                Text::_('PLG_SYSTEM_POSTMARKBOUNCE_EVENT_TYPE') . ' ' . htmlspecialchars($eventType) . "\n" .
+                Text::_('PLG_SYSTEM_POSTMARKBOUNCE_DESCRIPTION') . ' ' . htmlspecialchars($data['Description'] ?? Text::_('PLG_SYSTEM_POSTMARKBOUNCE_NO_DESCRIPTION')) . "\n" .
+                Text::_('PLG_SYSTEM_POSTMARKBOUNCE_BOUNCED_AT') . ' ' . htmlspecialchars($data['BouncedAt'] ?? 'N/A') . "\n" .
+                Text::_('PLG_SYSTEM_POSTMARKBOUNCE_SERVER_ID') . ' ' . htmlspecialchars($data['ServerID'] ?? 'N/A') . "\n" .
+                Text::_('PLG_SYSTEM_POSTMARKBOUNCE_MESSAGE_STREAM') . ' ' . htmlspecialchars($data['MessageStream'] ?? 'N/A') . "\n\n";
 
         // Send email
         $mailer = Factory::getMailer();

@@ -12,11 +12,16 @@
     <folder>system</folder>
     <files>
         <filename plugin="postmarkbounce">postmarkbounce.php</filename>
+		<folder>language</folder>
+        <folder>language/en-GB</folder>
+        <folder>language/el-GR</folder>
+        <filename>language/en-GB/plg_system_postmarkbounce.ini</filename>
+        <filename>language/el-GR/plg_system_postmarkbounce.ini</filename>
     </files>
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="notification_email" type="email" label="Notification Email" description="Email address to receive bounce notifications. If left empty, the administrator's email will be used."/>
+                <field name="notification_email" type="email" label="PLG_SYSTEM_POSTMARKBOUNCE_NOTIFICATION_EMAIL" description="PLG_SYSTEM_POSTMARKBOUNCE_NOTIFICATION_EMAIL_DESC"/>
             </fieldset>
         </fields>
     </config>
