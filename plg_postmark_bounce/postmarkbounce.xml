@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade" version="5.0">
+    <name>Postmark Bounce Notifier</name>
+    <version>1.0.0</version>
+    <description>Joomla plugin to receive Postmark bounce webhooks and notify the administrator via email.
+	</description>
+    <author>Rinenweb</author>
+	    <authorEmail>info@rinenweb.eu</authorEmail>
+	    <authorUrl>https://www.rinenweb.eu</authorUrl>
+    <creationDate>2025-02-23</creationDate>
+    <license>GNU General Public License version 3 or later</license>
+    <folder>system</folder>
+    <files>
+        <filename plugin="postmarkbounce">postmarkbounce.php</filename>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="notification_email" type="email" label="Notification Email" description="Email address to receive bounce notifications. If left empty, the administrator's email will be used."/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>
