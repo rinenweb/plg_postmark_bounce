@@ -6,6 +6,7 @@ This Joomla plugin handles bounce and spam complaint notifications from Postmark
 When an email sent through Postmark bounces or is marked as spam, this plugin can notify a specified email address.
 
 It's ideal for keeping your mailing lists clean and being instantly notified of delivery issues.
+Will (hopefully) play nice with Joomla 4.x, 5.x and 6.x (PHP 7.4+).
 
 ---
 
@@ -24,6 +25,9 @@ After enabling the plugin, click on its name to configure the available options:
 
 - **Notification Email**  
   _Email address to receive bounce notifications. If left empty, the administrator's email will be used._
+
+- **Webhook Token**  (since v1.0.1)
+  _Optional but recommended. If set, append &token=YOUR_TOKEN to the webhook URL in Postmark. Requests without the correct token are rejected._
 
 ### Instructions to set up the webhook in Postmark:
 
